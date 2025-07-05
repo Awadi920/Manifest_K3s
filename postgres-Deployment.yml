@@ -42,7 +42,10 @@ spec:
           mountPath: /var/lib/postgresql/data
         livenessProbe:
           exec:
-            command: ["pg_isready", "-U", "$(DB_USERNAME)"]  # Use env var in command
+            command:
+              - /bin/sh
+              - -c
+              - pg_isready -U "$POSTGRES_USER"
           initialDelaySeconds: 30
           periodSeconds: 10
       volumes:
