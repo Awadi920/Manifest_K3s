@@ -7,5 +7,5 @@ metadata:
 spec:
   data:
     realm-export.json: |
-      # Content of realm-export.json should be added here
+      # Content of realm-export.json should be added here .
       # Replace this with the actual content of your realm-export.json
