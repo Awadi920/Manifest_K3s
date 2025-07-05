@@ -1,4 +1,3 @@
----
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -20,7 +19,7 @@ spec:
       - name: gateway
         image: 79.137.37.94:8082/gateway-service:1.0.0
         ports:
-        - containerPort: 9999  # Hardcode based on GATEWAY_SERVER_PORT
+        - containerPort: 9999
         env:
         - name: SPRING_APPLICATION_NAME
           valueFrom:
@@ -28,43 +27,33 @@ spec:
               name: app-secrets
               key: GATEWAY_APPLICATION_NAME
         - name: SERVER_PORT
-          valueFrom:
-            secretKeyRef:
-              name: app-secrets
-              key: GATEWAY_SERVER_PORT
+          value: "9999"  # Hardcode to avoid conflicts with secret
         - name: SPRING_CLOUD_DISCOVERY_ENABLED
-          valueFrom:
-            secretKeyRef:
-              name: app-secrets
-              key: GATEWAY_SPRING_CLOUD_DISCOVERY_ENABLED
+          value: "true"  # Ensure discovery is enabled
         - name: EUREKA_INSTANCE_PREFER_IP_ADDRESS
-          valueFrom:
-            secretKeyRef:
-              name: app-secrets
-              key: GATEWAY_INSTANCE_PREFER_IP_ADDRESS
+          value: "true"  # Critical for Kubernetes
         - name: EUREKA_CLIENT_SERVICE_URL_DEFAULTZONE
-          valueFrom:
-            secretKeyRef:
-              name: app-secrets
-              key: GATEWAY_CLIENT_SERVICE_URL_DEFAULTZONE
+          value: "http://eureka-server:8761/eureka/"  # Must match Eureka service name
         - name: EUREKA_INSTANCE_INSTANCE_ID
           valueFrom:
             secretKeyRef:
               name: app-secrets
               key: GATEWAY_INSTANCE_INSTANCE_ID
         - name: SPRING_CLOUD_GATEWAY_DISCOVERY_LOCATOR_ENABLED
-          valueFrom:
-            secretKeyRef:
-              name: app-secrets
-              key: GATEWAY_CLOUD_GATEWAY_DISCOVERY_LOCATOR_ENABLED
+          value: "true"  # Fix typo ("DISCOVERY" → "DISCOVERY")
         - name: SPRING_CLOUD_CONFIG_ENABLED
-          valueFrom:
-            secretKeyRef:
-              name: app-secrets
-              key: GATEWAY_SPRING_CLOUD_CONFIG_ENABLED
+          value: "true"  # Ensure Config Server is used
+        - name: MANAGEMENT_ENDPOINTS_WEB_EXPOSURE_INCLUDE
+          value: "health,info"  # Expose actuator endpoints
         livenessProbe:
           httpGet:
-            path: /eureka
-            port: 9999  # Hardcode to match containerPort
-          initialDelaySeconds: 30
+            path: /actuator/health  # Correct Spring Boot health endpoint
+            port: 9999
+          initialDelaySeconds: 60  # Wait longer for startup
           periodSeconds: 10
+        readinessProbe:
+          httpGet:
+            path: /actuator/health
+            port: 9999
+          initialDelaySeconds: 30
+          periodSeconds: 5
