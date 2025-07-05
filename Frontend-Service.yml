@@ -9,6 +9,7 @@ spec:
     app: frontend
   ports:
   - protocol: TCP
-    port: 4200  # Matches containerPort
-    targetPort: 4200
+    port: 4200  # Internal port within the cluster
+    targetPort: 4200  # Matches containerPort
+    nodePort: 32000  # Optional: Specific port on cluster nodes (30000-32767)
   type: NodePort
