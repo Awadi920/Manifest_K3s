@@ -18,7 +18,7 @@ spec:
     spec:
       containers:
       - name: gateway
-        image: docker-repo:8082/gateway-service:latest
+        image: http://79.137.37.94:8082/gateway-service:1.0.0
         ports:
         - containerPort: ${GATEWAY_SERVER_PORT}
         env:
