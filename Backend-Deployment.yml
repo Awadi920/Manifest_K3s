@@ -18,7 +18,7 @@ spec:
     spec:
       containers:
       - name: bns-reference
-        image: docker-repo:8082/bns-reference:latest
+        image: http://79.137.37.94:8082/bnsref/manifests/1.0.0
         ports:
         - containerPort: ${Back_SERVER_PORT}
         env:
