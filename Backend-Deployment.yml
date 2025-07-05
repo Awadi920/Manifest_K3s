@@ -18,7 +18,7 @@ spec:
     spec:
       containers:
       - name: bns-reference
-        image: 79.137.37.94:8082/bns-reference:1.0.0
+        image: 79.137.37.94:8082/bnsref:1.0.0
         ports:
         - containerPort: 8044  # Hardcode based on BACK_SERVER_PORT from your input
         env:
