@@ -11,5 +11,5 @@ spec:
   - protocol: TCP
     port: 8044  # Internal port within the cluster
     targetPort: 8044  # Matches containerPort
-    nodePort: 30001  # External port on nodes
+    nodePort: 32001  # External port on nodes
   type: NodePort
