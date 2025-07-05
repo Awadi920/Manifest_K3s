@@ -60,12 +60,13 @@ spec:
               key: DB_PASSWORD
         - name: KC_HTTP_PORT
           value: "8085"
-        command: ["/opt/keycloak/bin/kc.sh", "start-dev", "--http-port=8085", "--import-realm", "--import-file=/config/realm-export.json"]
+        command: ["/opt/keycloak/bin/kc.sh", "start-dev", "--http-port=8085", "--import-realm"]
         volumeMounts:
-        - name: keycloak-realm
-          mountPath: /config
-          readOnly: true
+        - name: realm-export
+          mountPath: /opt/keycloak/data/import/realm-export.json
+          subPath: realm-export.json
       volumes:
-      - name: keycloak-realm
-        secret:
-          secretName: keycloak-realm-secret
+      - name: realm-export
+        hostPath:
+          path: /home/ubuntu/keycloak/realm-export.json  # Full absolute path to your file
+          type: File
