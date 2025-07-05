@@ -1,13 +1,14 @@
+---
 apiVersion: v1
 kind: Service
 metadata:
-  name: keycloak
+  name: gateway
   namespace: default
 spec:
   selector:
-    app: keycloak
+    app: gateway
   ports:
   - protocol: TCP
-    port: ${KEYCLOAK_PORT}
-    targetPort: 8085
+    port: 9999  # Matches containerPort
+    targetPort: 9999
   type: ClusterIP
