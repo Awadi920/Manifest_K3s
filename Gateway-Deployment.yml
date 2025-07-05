@@ -42,16 +42,17 @@ spec:
         - name: SPRING_CLOUD_GATEWAY_DISCOVERY_LOCATOR_ENABLED
           value: "true"  # Fix typo ("DISCOVERY" → "DISCOVERY")
         - name: SPRING_CLOUD_CONFIG_ENABLED
-          value: "true"  # Ensure Config Server is used
+          value: "false"  # Ensure Config Server is used
         - name: MANAGEMENT_ENDPOINTS_WEB_EXPOSURE_INCLUDE
           value: "health,info"  # Expose actuator endpoints
         livenessProbe:
           httpGet:
-            path: /actuator/health  # Correct Spring Boot health endpoint
+            path: /actuator/health  # ✅ Correct (Spring Boot health endpoint)
             port: 9999
           initialDelaySeconds: 60  # Wait longer for startup
           periodSeconds: 10
-        readinessProbe:
+        
+        readinessProbe:  # Add this (optional but recommended)
           httpGet:
             path: /actuator/health
             port: 9999
