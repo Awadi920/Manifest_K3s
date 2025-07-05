@@ -4,8 +4,9 @@ kind: ConfigMap
 metadata:
   name: keycloak-realm-config
   namespace: default
-spec:
-  data:
-    realm-export.json: |
-      # Content of realm-export.json should be added here .
-      # Replace this with the actual content of your realm-export.json
+  annotations:
+    argocd.argoproj.io/tracking-id: microservices-app:/ConfigMap:default/keycloak-realm-config
+data:
+  realm-export.json: |
+    # Content of realm-export.json should be added here
+    # Replace this with the actual content of your realm-export.json
