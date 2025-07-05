@@ -9,6 +9,6 @@ spec:
     app: bns-reference
   ports:
   - protocol: TCP
-    port: ${Back_SERVER_PORT}
-    targetPort: ${Back_SERVER_PORT}
+    port: 8044  # Matches containerPort
+    targetPort: 8044
   type: ClusterIP
