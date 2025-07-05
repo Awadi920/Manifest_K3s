@@ -9,6 +9,7 @@ spec:
     app: gateway
   ports:
   - protocol: TCP
-    port: 9999  # Matches containerPort
-    targetPort: 9999
-  type: ClusterIP
+    port: 9999  # Internal port within the cluster
+    targetPort: 9999  # Matches containerPort
+    nodePort: 32003  # External port on nodes
+  type: NodePort
