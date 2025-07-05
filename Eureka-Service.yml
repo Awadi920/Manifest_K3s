@@ -9,6 +9,7 @@ spec:
     app: eureka-server
   ports:
   - protocol: TCP
-    port: 8761  # Matches containerPort from Deployment
-    targetPort: 8761
-  type: ClusterIP
+    port: 8761  # Internal port within the cluster
+    targetPort: 8761  # Matches containerPort from Deployment
+    nodePort: 32005  # External port on nodes
+  type: NodePort
