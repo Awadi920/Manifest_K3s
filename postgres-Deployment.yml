@@ -23,17 +23,26 @@ spec:
         - containerPort: 5432
         env:
         - name: POSTGRES_USER
-          value: "${DB_USERNAME}"
+          valueFrom:
+            secretKeyRef:
+              name: app-secrets
+              key: DB_USERNAME
         - name: POSTGRES_PASSWORD
-          value: "${DB_PASSWORD}"
+          valueFrom:
+            secretKeyRef:
+              name: app-secrets
+              key: DB_PASSWORD
         - name: POSTGRES_DB
-          value: "${DB_NAME}"
+          valueFrom:
+            secretKeyRef:
+              name: app-secrets
+              key: DB_NAME
         volumeMounts:
         - name: postgres-data
           mountPath: /var/lib/postgresql/data
         livenessProbe:
           exec:
-            command: ["pg_isready", "-U", "${DB_USERNAME}"]
+            command: ["pg_isready", "-U", "$(DB_USERNAME)"]  # Use env var in command
           initialDelaySeconds: 30
           periodSeconds: 10
       volumes:
