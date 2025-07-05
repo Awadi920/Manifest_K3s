@@ -18,21 +18,42 @@ spec:
     spec:
       containers:
       - name: bns-reference
-        image: http://79.137.37.94:8082/bnsref/manifests/1.0.0
+        image: 79.137.37.94:8082/bns-reference:1.0.0
         ports:
-        - containerPort: ${Back_SERVER_PORT}
+        - containerPort: 8044  # Hardcode based on BACK_SERVER_PORT from your input
         env:
         - name: SPRING_APPLICATION_NAME
-          value: "${BACK_SPRING_APPLICATION_NAME}"
+          valueFrom:
+            secretKeyRef:
+              name: app-secrets
+              key: BACK_SPRING_APPLICATION_NAME
         - name: SPRING_CLOUD_CONFIG_URI
-          value: "${BACK_SERVER_URI}"
+          valueFrom:
+            secretKeyRef:
+              name: app-secrets
+              key: BACK_SERVER_URI
         - name: SPRING_CONFIG_IMPORT
-          value: "${BACK_SPRING_CONFIG_IMPORT}"
+          valueFrom:
+            secretKeyRef:
+              name: app-secrets
+              key: BACK_SPRING_CONFIG_IMPORT
         - name: SPRING_CLOUD_CONFIG_ENABLED
-          value: "${BACK_SPRING_CLOUD_CONFIG_ENABLED}"
+          valueFrom:
+            secretKeyRef:
+              name: app-secrets
+              key: BACK_SPRING_CLOUD_CONFIG_ENABLED
         - name: EUREKA_INSTANCE_PREFER_IP_ADDRESS
-          value: "${BACK_INSTANCE_PREFER_IP_ADDRESS}"
+          valueFrom:
+            secretKeyRef:
+              name: app-secrets
+              key: BACK_INSTANCE_PREFER_IP_ADDRESS
         - name: EUREKA_CLIENT_SERVICE_URL_DEFAULTZONE
-          value: "${BACK_CLIENT_SERVICE_URL_DEFAULTZONE}"
+          valueFrom:
+            secretKeyRef:
+              name: app-secrets
+              key: BACK_CLIENT_SERVICE_URL_DEFAULTZONE
         - name: EUREKA_INSTANCE_INSTANCE_ID
-          value: "${BACK_INSTANCE_INSTANCE_ID}"
+          valueFrom:
+            secretKeyRef:
+              name: app-secrets
+              key: BACK_INSTANCE_INSTANCE_ID
