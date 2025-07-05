@@ -1,0 +1,14 @@
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: bns-reference
+  namespace: default
+spec:
+  selector:
+    app: bns-reference
+  ports:
+  - protocol: TCP
+    port: ${Back_SERVER_PORT}
+    targetPort: ${Back_SERVER_PORT}
+  type: ClusterIP
