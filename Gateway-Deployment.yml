@@ -18,29 +18,53 @@ spec:
     spec:
       containers:
       - name: gateway
-        image: http://79.137.37.94:8082/gateway-service:1.0.0
+        image: 79.137.37.94:8082/gateway-service:1.0.0
         ports:
-        - containerPort: ${GATEWAY_SERVER_PORT}
+        - containerPort: 9999  # Hardcode based on GATEWAY_SERVER_PORT
         env:
         - name: SPRING_APPLICATION_NAME
-          value: "${GATEWAY_APPLICATION_NAME}"
+          valueFrom:
+            secretKeyRef:
+              name: app-secrets
+              key: GATEWAY_APPLICATION_NAME
         - name: SERVER_PORT
-          value: "${GATEWAY_SERVER_PORT}"
+          valueFrom:
+            secretKeyRef:
+              name: app-secrets
+              key: GATEWAY_SERVER_PORT
         - name: SPRING_CLOUD_DISCOVERY_ENABLED
-          value: "${GATEWAY_SPRING_CLOUD_DISCOVERY_ENABLED}"
+          valueFrom:
+            secretKeyRef:
+              name: app-secrets
+              key: GATEWAY_SPRING_CLOUD_DISCOVERY_ENABLED
         - name: EUREKA_INSTANCE_PREFER_IP_ADDRESS
-          value: "${GATEWAY_INSTANCE_PREFER_IP_ADDRESS}"
+          valueFrom:
+            secretKeyRef:
+              name: app-secrets
+              key: GATEWAY_INSTANCE_PREFER_IP_ADDRESS
         - name: EUREKA_CLIENT_SERVICE_URL_DEFAULTZONE
-          value: "${GATEWAY_CLIENT_SERVICE_URL_DEFAULTZONE}"
+          valueFrom:
+            secretKeyRef:
+              name: app-secrets
+              key: GATEWAY_CLIENT_SERVICE_URL_DEFAULTZONE
         - name: EUREKA_INSTANCE_INSTANCE_ID
-          value: "${GATEWAY_INSTANCE_INSTANCE_ID}"
+          valueFrom:
+            secretKeyRef:
+              name: app-secrets
+              key: GATEWAY_INSTANCE_INSTANCE_ID
         - name: SPRING_CLOUD_GATEWAY_DISCOVERY_LOCATOR_ENABLED
-          value: "${GATEWAY_CLOUD_GATEWAY_DISCOVERY_LOCATOR_ENABLED}"
+          valueFrom:
+            secretKeyRef:
+              name: app-secrets
+              key: GATEWAY_CLOUD_GATEWAY_DISCOVERY_LOCATOR_ENABLED
         - name: SPRING_CLOUD_CONFIG_ENABLED
-          value: "${GATEWAY_SPRING_CLOUD_CONFIG_ENABLED}"
+          valueFrom:
+            secretKeyRef:
+              name: app-secrets
+              key: GATEWAY_SPRING_CLOUD_CONFIG_ENABLED
         livenessProbe:
           httpGet:
             path: /eureka
-            port: ${GATEWAY_SERVER_PORT}
+            port: 9999  # Hardcode to match containerPort
           initialDelaySeconds: 30
           periodSeconds: 10
