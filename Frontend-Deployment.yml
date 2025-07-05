@@ -18,9 +18,12 @@ spec:
     spec:
       containers:
       - name: frontend
-        image: http://79.137.37.94:8082/pfe-frontend:1.0.0
+        image: 79.137.37.94:8082/pfe-frontend:1.0.0
         ports:
-        - containerPort: 80
+        - containerPort: 4200  # Hardcode based on ANGULAR_PORT
         env:
         - name: API_URL
-          value: "${API_URL}"
+          valueFrom:
+            secretKeyRef:
+              name: app-secrets
+              key: API_URL
