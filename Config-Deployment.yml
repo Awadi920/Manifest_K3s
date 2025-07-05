@@ -18,37 +18,73 @@ spec:
     spec:
       containers:
       - name: config-server
-        image: http://79.137.37.94:8082/config-service:1.0.0
+        image: 79.137.37.94:8082/config-service:1.0.0
         ports:
-        - containerPort: ${CONFIG_SERVER_PORT}
+        - containerPort: 8888  # Hardcode based on CONFIG_SERVER_PORT
         env:
         - name: SPRING_APPLICATION_NAME
-          value: "${CONFIG_APPLICATION_NAME}"
+          valueFrom:
+            secretKeyRef:
+              name: app-secrets
+              key: CONFIG_APPLICATION_NAME
         - name: SERVER_PORT
-          value: "${CONFIG_SERVER_PORT}"
+          valueFrom:
+            secretKeyRef:
+              name: app-secrets
+              key: CONFIG_SERVER_PORT
         - name: SPRING_CLOUD_DISCOVERY_ENABLED
-          value: "${CONFIG_SPRING_CLOUD_DISCOVERY_ENABLED}"
+          valueFrom:
+            secretKeyRef:
+              name: app-secrets
+              key: CONFIG_SPRING_CLOUD_DISCOVERY_ENABLED
         - name: EUREKA_INSTANCE_PREFER_IP_ADDRESS
-          value: "${CONFIG_EUREKA_INSTANCE_PREFER_IP_ADDRESS}"
+          valueFrom:
+            secretKeyRef:
+              name: app-secrets
+              key: CONFIG_EUREKA_INSTANCE_PREFER_IP_ADDRESS
         - name: EUREKA_CLIENT_SERVICE_URL_DEFAULTZONE
-          value: "${CONFIG_CLIENT_SERVICE_URL_DEFAULTZONE}"
+          valueFrom:
+            secretKeyRef:
+              name: app-secrets
+              key: CONFIG_CLIENT_SERVICE_URL_DEFAULTZONE
         - name: MANAGEMENT_ENDPOINTS_WEB_EXPOSURE_INCLUDE
-          value: "${CONFIG_MANAGEMENT_ENDPOINTS_WEB_EXPOSURE_INCLUDE}"
+          valueFrom:
+            secretKeyRef:
+              name: app-secrets
+              key: CONFIG_MANAGEMENT_ENDPOINTS_WEB_EXPOSURE_INCLUDE
         - name: SPRING_CLOUD_CONFIG_SERVER_GIT_URI
-          value: "${CONFIG_SPRING_CLOUD_CONFIG_SERVER_GIT_URI}"
+          valueFrom:
+            secretKeyRef:
+              name: app-secrets
+              key: CONFIG_SPRING_CLOUD_CONFIG_SERVER_GIT_URI
         - name: LOGGING_LEVEL_ORG_SPRINGFRAMEWORK_CLOUD_CONFIG_SERVER_ENVIRONMENT
-          value: "${CONFIG_LOGGING_LEVEL_ORG_SPRINGFRAMEWORK_CLOUD_CONFIG_SERVER_ENVIRONMENT}"
+          valueFrom:
+            secretKeyRef:
+              name: app-secrets
+              key: CONFIG_LOGGING_LEVEL_ORG_SPRINGFRAMEWORK_CLOUD_CONFIG_SERVER_ENVIRONMENT
         - name: LOGGING_LEVEL_ORG_SPRINGFRAMEWORK_CLOUD_CONFIG
-          value: "${CONFIG_LOGGING_LEVEL_ORG_SPRINGFRAMEWORK_CLOUD_CONFIG}"
+          valueFrom:
+            secretKeyRef:
+              name: app-secrets
+              key: CONFIG_LOGGING_LEVEL_ORG_SPRINGFRAMEWORK_CLOUD_CONFIG
         - name: LOGGING_LEVEL_ORG_SPRINGFRAMEWORK_CLOUD_CONFIG_SERVER_ENVIRONMENT_MULTIPLEJGITENVIRONMENTREPOSITORY
-          value: "${CONFIG_LOGGING_LEVEL_ORG_SPRINGFRAMEWORK_CLOUD_CONFIG_SERVER_ENVIRONMENT_MULTIPLEJGITENVIRONMENTREPOSITORY}"
+          valueFrom:
+            secretKeyRef:
+              name: app-secrets
+              key: CONFIG_LOGGING_LEVEL_ORG_SPRINGFRAMEWORK_CLOUD_CONFIG_SERVER_ENVIRONMENT_MULTIPLEJGITENVIRONMENTREPOSITORY
         - name: SPRING_CLOUD_CONFIG_SERVER_GIT_USERNAME
-          value: "${CONFIG_SPRING_CLOUD_CONFIG_SERVER_GIT_USERNAME}"
+          valueFrom:
+            secretKeyRef:
+              name: app-secrets
+              key: CONFIG_SPRING_CLOUD_CONFIG_SERVER_GIT_USERNAME
         - name: SPRING_CLOUD_CONFIG_SERVER_GIT_PASSWORD
-          value: "${CONFIG_SPRING_CLOUD_CONFIG_SERVER_GIT_PASSWORD}"
+          valueFrom:
+            secretKeyRef:
+              name: app-secrets
+              key: CONFIG_SPRING_CLOUD_CONFIG_SERVER_GIT_PASSWORD
         livenessProbe:
           httpGet:
             path: /actuator/health
-            port: ${CONFIG_SERVER_PORT}
+            port: 8888  # Hardcode to match containerPort
           initialDelaySeconds: 30
           periodSeconds: 10
