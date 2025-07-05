@@ -9,6 +9,7 @@ spec:
     app: keycloak
   ports:
   - protocol: TCP
-    port: 8085  # Matches containerPort
-    targetPort: 8085
-  type: ClusterIP
+    port: 8085  # Internal port within the cluster
+    targetPort: 8085  # Matches containerPort
+    nodePort: 32004  # External port on nodes
+  type: NodePort
