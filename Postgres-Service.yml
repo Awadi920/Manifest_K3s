@@ -1,3 +1,4 @@
+---
 apiVersion: v1
 kind: Service
 metadata:
@@ -8,6 +9,6 @@ spec:
     app: postgres
   ports:
   - protocol: TCP
-    port: ${DB_PORT}
+    port: 5432  # Matches containerPort
     targetPort: 5432
   type: ClusterIP
