@@ -23,21 +23,42 @@ spec:
         - containerPort: 8085
         env:
         - name: KEYCLOAK_ADMIN
-          value: "${KEYCLOAK_ADMIN_USER}"
+          valueFrom:
+            secretKeyRef:
+              name: app-secrets
+              key: KEYCLOAK_ADMIN_USER
         - name: KEYCLOAK_ADMIN_PASSWORD
-          value: "${KEYCLOAK_ADMIN_PASSWORD}"
+          valueFrom:
+            secretKeyRef:
+              name: app-secrets
+              key: KEYCLOAK_ADMIN_PASSWORD
         - name: DB_VENDOR
           value: "postgres"
         - name: DB_ADDR
-          value: "${DB_HOST}"
+          valueFrom:
+            secretKeyRef:
+              name: app-secrets
+              key: DB_HOST
         - name: DB_PORT
-          value: "${DB_PORT}"
+          valueFrom:
+            secretKeyRef:
+              name: app-secrets
+              key: DB_PORT
         - name: DB_DATABASE
-          value: "${DB_NAME}"
+          valueFrom:
+            secretKeyRef:
+              name: app-secrets
+              key: DB_NAME
         - name: DB_USER
-          value: "${DB_USERNAME}"
+          valueFrom:
+            secretKeyRef:
+              name: app-secrets
+              key: DB_USERNAME
         - name: DB_PASSWORD
-          value: "${DB_PASSWORD}"
+          valueFrom:
+            secretKeyRef:
+              name: app-secrets
+              key: DB_PASSWORD
         - name: KC_HTTP_PORT
           value: "8085"
         command: ["start-dev", "--http-port=8085", "--import-realm"]
