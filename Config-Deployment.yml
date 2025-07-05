@@ -18,7 +18,7 @@ spec:
     spec:
       containers:
       - name: config-server
-        image: docker-repo:8082/config-service:latest
+        image: http://79.137.37.94:8082/config-service:1.0.0
         ports:
         - containerPort: ${CONFIG_SERVER_PORT}
         env:
