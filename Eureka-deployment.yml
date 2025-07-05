@@ -1,0 +1,43 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: eureka-server
+  namespace: default
+  labels:
+    app: eureka-server
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: eureka-server
+  template:
+    metadata:
+      labels:
+        app: eureka-server
+    spec:
+      containers:
+      - name: eureka-server
+        image: 79.137.37.94:8082/discovery-service:1.0.0
+        ports:
+        - containerPort: 8761
+        env:
+        - name: SPRING_APPLICATION_NAME
+          valueFrom:
+            secretKeyRef:
+              name: app-secrets
+              key: DISCOVERY_APPLICATION_NAME
+        - name: SERVER_PORT
+          valueFrom:
+            secretKeyRef:
+              name: app-secrets
+              key: DISCOVERY_SERVER_PORT
+        - name: EUREKA_CLIENT_FETCH_REGISTRY
+          valueFrom:
+            secretKeyRef:
+              name: app-secrets
+              key: DISCOVERY_EUREKA_CLIENT_FETCH_REGISTRY
+        - name: EUREKA_CLIENT_REGISTER_WITH_EUREKA
+          valueFrom:
+            secretKeyRef:
+              name: app-secrets
+              key: DISCOVERY_EUREKA_CLIENT_REGISTER_WITH_EUREKA
