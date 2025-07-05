@@ -9,6 +9,6 @@ spec:
     app: eureka-server
   ports:
   - protocol: TCP
-    port: ${DISCOVERY_SERVER_PORT}
-    targetPort: ${DISCOVERY_SERVER_PORT}
+    port: 8761  # Matches containerPort from Deployment
+    targetPort: 8761
   type: ClusterIP
