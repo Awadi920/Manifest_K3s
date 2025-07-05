@@ -9,6 +9,6 @@ spec:
     app: keycloak
   ports:
   - protocol: TCP
-    port: ${KEYCLOAK_PORT}
+    port: 8085  # Matches containerPort
     targetPort: 8085
   type: ClusterIP
