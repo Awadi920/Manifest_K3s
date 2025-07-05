@@ -1,0 +1,38 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: bns-reference
+  namespace: default
+  labels:
+    app: bns-reference
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: bns-reference
+  template:
+    metadata:
+      labels:
+        app: bns-reference
+    spec:
+      containers:
+      - name: bns-reference
+        image: docker-repo:8082/bns-reference:latest
+        ports:
+        - containerPort: ${Back_SERVER_PORT}
+        env:
+        - name: SPRING_APPLICATION_NAME
+          value: "${BACK_SPRING_APPLICATION_NAME}"
+        - name: SPRING_CLOUD_CONFIG_URI
+          value: "${BACK_SERVER_URI}"
+        - name: SPRING_CONFIG_IMPORT
+          value: "${BACK_SPRING_CONFIG_IMPORT}"
+        - name: SPRING_CLOUD_CONFIG_ENABLED
+          value: "${BACK_SPRING_CLOUD_CONFIG_ENABLED}"
+        - name: EUREKA_INSTANCE_PREFER_IP_ADDRESS
+          value: "${BACK_INSTANCE_PREFER_IP_ADDRESS}"
+        - name: EUREKA_CLIENT_SERVICE_URL_DEFAULTZONE
+          value: "${BACK_CLIENT_SERVICE_URL_DEFAULTZONE}"
+        - name: EUREKA_INSTANCE_INSTANCE_ID
+          value: "${BACK_INSTANCE_INSTANCE_ID}"
