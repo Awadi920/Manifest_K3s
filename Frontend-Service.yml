@@ -9,6 +9,6 @@ spec:
     app: frontend
   ports:
   - protocol: TCP
-    port: ${ANGULAR_PORT}
-    targetPort: 80
+    port: 4200  # Matches containerPort
+    targetPort: 4200
   type: ClusterIP
