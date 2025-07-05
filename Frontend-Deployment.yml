@@ -18,7 +18,7 @@ spec:
     spec:
       containers:
       - name: frontend
-        image: docker-repo:8082/angular-frontend:latest
+        image: http://79.137.37.94:8082/pfe-frontend:1.0.0
         ports:
         - containerPort: 80
         env:
