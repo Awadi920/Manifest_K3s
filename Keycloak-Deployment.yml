@@ -62,11 +62,13 @@ spec:
           value: "8085"
         command: ["/opt/keycloak/bin/kc.sh", "start-dev", "--http-port=8085", "--import-realm"]
         volumeMounts:
-        - name: realm-export
-          mountPath: /opt/keycloak/data/import/realm-export.json
-          subPath: realm-export.json
+        - name: realm-secret-volume
+          mountPath: /opt/keycloak/data/import/realm-export.json  # Mounts directly to the file
+          subPath: realm-export.json  # Ensures only the file is mounted, not the entire Secret
       volumes:
-      - name: realm-export
-        hostPath:
-          path: /home/ubuntu/keycloak/realm-export.json  # Full absolute path to your file
-          type: File
+      - name: realm-secret-volume
+        secret:
+          secretName: keycloak-realm-secret
+          items:
+          - key: realm-export.json
+            path: realm-export.json  # Maps the Secret key to the filename
