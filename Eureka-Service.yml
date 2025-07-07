@@ -3,7 +3,7 @@ apiVersion: v1
 kind: Service
 metadata:
   name: eureka-server
-  namespace: default
+  namespace: bns-app
 spec:
   selector:
     app: eureka-server
