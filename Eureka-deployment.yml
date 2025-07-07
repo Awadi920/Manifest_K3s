@@ -2,7 +2,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: eureka-server
-  namespace: default
+  namespace: bns-app
   labels:
     app: eureka-server
 spec:
