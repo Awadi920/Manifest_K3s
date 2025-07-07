@@ -3,7 +3,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: bns-reference
-  namespace: default
+  namespace: bns-app
   labels:
     app: bns-reference
 spec:
