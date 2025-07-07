@@ -2,7 +2,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: gateway
-  namespace: default
+  namespace: bns-app
   labels:
     app: gateway
 spec:
